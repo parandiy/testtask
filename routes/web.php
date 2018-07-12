@@ -20,5 +20,7 @@ Route::get( '/', 'IndexController@index' )
      ->name( 'front_push' );
 Route::get( '/push', 'IndexController@push' )
      ->name( 'front_push' );
-Route::get( '/lists', 'IndexController@lists' )
-     ->name( 'front_lists' );
+Route::get( '/grades/{car_id}', 'IndexController@grades' )
+     ->name( 'front_grades' );
+Route::get( '/get_grade/{grade_id}', 'IndexController@get_grade' )
+     ->name( 'front_get_grade' );

@@ -4,7 +4,13 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Car extends Model
+class Car
+	extends Model
 {
 	public $timestamps = FALSE;
+
+	public function grades()
+	{
+		return $this->hasMany( 'App\Models\Grade' );
+	}
 }

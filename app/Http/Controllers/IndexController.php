@@ -15,20 +15,29 @@ class IndexController
 {
 	public function index()
 	{
-		return view( 'index' );
+		$makes = Car::select( 'id', 'title' )
+		            ->get();
+
+		return view( 'index', [ 'makes' => $makes ] );
 	}
 
-	public function lists()
+	public function grades( $car_id )
 	{
-		$list = Car::select( 'id', 'title', 'sprite' )
-		           ->get();
+		$grades = Grade::select( 'id', 'title' )
+		               ->where( 'car_id', $car_id )
+		               ->get();
 
-		return json_encode( [
-			                    "draw"            => 1,
-			                    "recordsTotal"    => count( $list ),
-			                    "recordsFiltered" => count( $list ),
-			                    'data'            => $list
-		                    ] );
+		return json_encode( $grades );
+	}
+
+	public function get_grade( $grade_id )
+	{
+		$grade = Grade::find( $grade_id );
+
+		return view( 'details',
+		             [
+			             'grade' => $grade
+		             ] );
 	}
 
 	public function push()
@@ -134,11 +143,12 @@ class IndexController
 					}
 
 					$specification_value = SpecificationValue::where( 'name', $v_specification['details'] )
+					                                         ->where( 'specification_id', $specification_name->id )
 					                                         ->first();
 					if ( !$specification_value )
 					{
 						$specification_value                   = new SpecificationValue();
-						$specification_value->name             = $v_specification['title'];
+						$specification_value->name             = $v_specification['details'];
 						$specification_value->specification_id = $specification_name->id;
 						$specification_value->save();
 					}

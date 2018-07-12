@@ -16,7 +16,7 @@ class CreateSpecificationsValuesTable extends Migration {
 		{
 			$table->integer('id', true);
 			$table->integer('specification_id');
-			$table->string('name');
+			$table->text('name');
 		});
 	}
 
